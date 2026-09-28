@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f7f9">
+    <meta name="description" content="ゴルフのオリンピックをホールごとに記録し、獲得点と差引点を自動計算します。">
+    <title>オリンピック記録</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand-mark" href="./" aria-label="オリンピック記録 ホーム">
+          <img src="./assets/brand/ntt-data-logo-future-blue-isolated.png" width="164" height="42" alt="NTT DATA">
+        </a>
+        <div class="product-title">
+          <p class="eyebrow">GOLF SIDE GAME</p>
+          <h1>オリンピック記録</h1>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div id="status-message" class="status-message" role="status" aria-live="polite" hidden></div>
+      <noscript><p class="notice notice-error">このアプリを使うには JavaScript を有効にしてください。</p></noscript>
+
+      <section class="toolbar" aria-label="ラウンド操作">
+        <p class="privacy-note">記録はこのブラウザー内に保存され、サーバーには送信されません。</p>
+        <div class="toolbar-actions">
+          <button id="new-round-button" class="button button-primary" type="button" disabled>新しいラウンド</button>
+          <button id="export-button" class="button button-secondary" type="button" disabled>JSONを書き出す</button>
+          <button id="import-button" class="button button-secondary" type="button" disabled>バックアップを復元</button>
+          <input id="import-file" class="visually-hidden" type="file" accept="application/json,.json" tabindex="-1" aria-label="復元する JSON ファイル">
+        </div>
+      </section>
+
+      <section id="setup-panel" class="setup-panel surface" aria-labelledby="setup-title" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ROUND SETUP</p>
+            <h2 id="setup-title">ラウンドを作成</h2>
+          </div>
+          <button id="close-setup-button" class="icon-button" type="button" aria-label="作成フォームを閉じる">閉じる</button>
+        </div>
+        <form id="round-form">
+          <div class="form-grid">
+            <label class="field">
+              <span>日付</span>
+              <input id="round-date" name="date" type="date" required>
+            </label>
+            <label class="field">
+              <span>ホール数</span>
+              <select id="hole-count" name="holeCount">
+                <option value="9">9ホール</option>
+                <option value="18" selected>18ホール</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>プレーヤー数</span>
+              <select id="player-count" name="playerCount">
+                <option value="2">2人</option>
+                <option value="3">3人</option>
+                <option value="4" selected>4人</option>
+              </select>
+            </label>
+          </div>
+          <fieldset class="player-fields">
+            <legend>プレーヤー名</legend>
+            <div class="form-grid player-name-grid">
+              <label class="field player-field" data-player-field="0"><span>プレーヤー 1</span><input name="player1" maxlength="40" autocomplete="off" required></label>
+              <label class="field player-field" data-player-field="1"><span>プレーヤー 2</span><input name="player2" maxlength="40" autocomplete="off" required></label>
+              <label class="field player-field" data-player-field="2"><span>プレーヤー 3</span><input name="player3" maxlength="40" autocomplete="off" required></label>
+              <label class="field player-field" data-player-field="3"><span>プレーヤー 4</span><input name="player4" maxlength="40" autocomplete="off" required></label>
+            </div>
+          </fieldset>
+          <label class="toggle-field">
+            <input id="diamond-enabled" name="diamondEnabled" type="checkbox" checked>
+            <span class="toggle-copy"><strong>ダイヤを有効にする</strong><small>グリーン外から直接カップインした場合に5点を記録できます。</small></span>
+          </label>
+          <div class="form-actions">
+            <button class="button button-primary" type="submit">ラウンドを開始</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="round-panel" aria-label="ラウンド記録"></section>
+
+      <section id="history-panel" class="history-panel" aria-labelledby="history-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">SAVED LOCALLY</p>
+            <h2 id="history-title" tabindex="-1">ラウンド履歴</h2>
+          </div>
+          <span id="history-count" class="quiet-count"></span>
+        </div>
+        <div id="history-list"></div>
+      </section>
+
+      <section class="rules-panel" aria-labelledby="rules-heading">
+        <details>
+          <summary id="rules-heading">ルールと点数計算</summary>
+          <div id="rules-content" class="rules-content">
+            <p>ルールを読み込んでいます。</p>
+          </div>
+        </details>
+      </section>
+
+      <p class="data-note">ブラウザーのデータを消去すると記録も消えます。端末の変更やデータ消去の前に、JSONバックアップを保存してください。</p>
+    </main>
+
+    <footer class="site-footer">
+      <span>ゴルフのオリンピックを点数で記録</span>
+      <span class="genesis-credit">Powered by Genesis</span>
+    </footer>
+  </body>
+</html>
