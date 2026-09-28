@@ -2,7 +2,7 @@
 
 ## 確認方針
 
-POA の Task Brief に従い、test files を追加せず、test / build コマンドを実行しない。実装後は計算式、保存形式、復元検証のソースを読み直して自己点検する。ブラウザーでの手動確認および GitHub Pages の実行結果は、実施できるまで **Not run** とする。
+POA の Task Brief に従い、test files を追加せず、test / build コマンドを実行しない。実装後は計算式、保存形式、復元検証のソースを読み直して自己点検する。ブラウザー操作の手動確認は **Not run**。GitHub Pages の公開確認は実行結果を記録する。
 
 ## 自己点検
 
@@ -24,9 +24,16 @@ POA の Task Brief に従い、test files を追加せず、test / build コマ�
 | M-05 | ページを再読み込みし、履歴から再開・削除 | 保存済みラウンドが復元され、各ラウンドの最後のホールから再開でき、削除には確認が出る | Not run |
 | M-06 | 全件 JSON を書き出し、復元する | 全記録を復元し、置換前に確認を表示する。不正形式は拒否する | Not run |
 | M-07 | 320px、375px、デスクトップ幅で操作 | 主要操作が画面内に収まり、ボタン高さ44px以上、フォーカスが見える | Not run |
-| M-08 | GitHub Pages のプロジェクト URL を開く | `rules.json`、CSS、JavaScript、ロゴが相対パスで読み込まれる | Not run |
+| M-08 | GitHub Pages のプロジェクト URL を開く | `rules.json`、CSS、JavaScript、ロゴが相対パスで読み込まれる | 確認済み：URL と主要資材が HTTP 200 |
+
+## GitHub Pages 公開結果
+
+- Workflow run: [36393038414](https://github.com/h-yoshinori-tamagami/olympic/actions/runs/36393038414) — Success
+- 公開 URL: https://h-yoshinori-tamagami.github.io/olympic/
+- `app.js`、`styles.css`、`rules.json`、公式ロゴの HTTP status: 200
+- 非 blocker warning: Node.js 20 および `ubuntu-latest` の移行警告あり。今回の deploy は成功。
 
 ## 実行しない項目
 
 - 自動テスト、test files の追加、test / build コマンド：Task Brief により実行しない。
-- Pages workflow：GitHub に Draft PR / topic branch を用意した後、Actions の完了状態と公開 URL を確認する。
+- 手動の画面操作確認 M-01〜M-07：未実施（Not run）。
