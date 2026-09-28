@@ -36,34 +36,34 @@ base_structure:
 
 | 用途 | 適用値 |
 |---|---|
-| Primary / Future Blue | `#0072BC` |
-| Hover | `#005B96` |
-| Smart Navy / 主テキスト | `#070F26` |
-| 補助テキスト | `#526875` |
-| Surface / Canvas | `#FFFFFF` / `#F4F7F9` |
+| Primary / Golf Green | `#236246` |
+| Hover | `#194B36` |
+| Ink / 主テキスト | `#173326` |
+| 補助テキスト | `#566D5E` |
+| Surface / Canvas | `#FFFFFF` / `#F4F7F3` |
 | 基本文字 | Noto Sans JP / Noto Sans / system-ui の順。外部フォントを取得しない |
 | 本文 | 16px、行間1.5 |
 | 見出し | 22px、太字、行間1.2 |
 | 余白 | 4 / 8 / 12 / 16 / 24 / 32px |
 | 角丸 | 入力・ボタン4〜8px、まとまり12px |
 
-色はブランドの連続性と読みやすさに使う。メダル色は選択肢の意味を助ける範囲に留め、選択状態は Future Blue の枠でも判別できる。選択対象はテキストと点数を併記し、色だけで意味を伝えない。
+Golf Green と落ち着いたニュートラルカラーでアプリ独自の識別性を作る。メダル色は選択肢の意味を助ける範囲に留め、選択状態は Golf Green の枠でも判別できる。選択対象はテキストと点数を併記し、色だけで意味を伝えない。
 
 ### 操作性・アクセシビリティ
 
 - 主要ボタン・メダル選択・ホール番号は44px以上の高さを確保する。
-- ネイティブの button / input / select を使い、キーボードフォーカスを青い外枠で示す。
+- ネイティブの button / input / select を使い、キーボードフォーカスを Golf Green の外枠で示す。
 - 320〜414px幅で横スクロールを避ける。プレーヤーカードとフォームは1列、メダルは3列にする。
 - 「獲得点」と「差引点」を別々に表示し、各ホールとラウンドの差引合計0を確認できる。
 - `prefers-reduced-motion` ではトランジションを抑える。
 
-### NTT DATA ロゴと Genesis 表示
+### 専用ロゴと Genesis 表示
 
-- `assets/brand/ntt-data-logo-future-blue-isolated.png` は prototype-design-bundle の支給済み公式ロゴを独立コピーしたもの。
-- 元の透明 Isolation を含む PNG をトリミングせず、アプリ名とは別領域に配置する。表示幅164pxで可視ロゴ幅は約143pxとなり、通常時の最小可視幅110pxを上回る。
-- 透明余白への重なり、負の margin、clip、overlay は使わない。追加の clear-space 用 padding は加えない。
+- `assets/brand/olympic-score-logo.svg` は本アプリ用に作成したゴルフボールと旗のオリジナル図案。
+- 五輪リング、第三者ロゴ、既存ブランドを想起させる意匠は使わない。外部画像や外部フォントに依存せず、SVG を相対パスで読み込む。
+- ロゴはアプリ名と分けてヘッダーに配置し、縮小時も形を保つ。
 - Footer に `Powered by Genesis` を補助情報として常時表示し、主要操作より強くしない。
 
 ## 参照した標準
 
-`prototype-design-bundle/DESIGN.md` と `VISUAL_GROUNDING_HARNESS.md` の Product app 判断、Future Blue、Noto 系書体、操作対象サイズ、フォーカス表示、公式 Isolation logo、Footer 表示を適用した。公式画像自体は専用リポジトリ内に置き、実行時に別リポジトリを参照しない。
+Product app の構成、読みやすい Noto 系システム書体、操作対象サイズ、フォーカス表示、レスポンシブと控えめな Footer の共通原則を適用した。アプリ専用ロゴと色はこのプロジェクト内で定義し、第三者ブランド表現を持ち込まない。

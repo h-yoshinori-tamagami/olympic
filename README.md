@@ -41,10 +41,11 @@ python3 -m http.server 8000
 - `styles.css` — レスポンシブ表示とデザイン token
 - `app.js` — 記録、計算、保存、バックアップ / 復元
 - `rules.json` — 標準点数とルール説明
+- `assets/brand/olympic-score-logo.svg` — ゴルフボールと旗を描いた専用ロゴ
 - `docs/` — 設計・実装・確認資料
 - `.github/workflows/pages.yml` — 静的ファイルを GitHub Pages に公開
 
-外部 CDN、実行時ライブラリ、バックエンド、利用者記録ファイルはありません。公開時にはアプリ本体とロゴだけを Pages に配置し、設計資料や JSON バックアップは配置しません。
+アプリ専用の SVG ロゴを使い、五輪リングや第三者ブランド表現は使いません。外部 CDN、実行時ライブラリ、バックエンド、利用者記録ファイルはありません。公開時にはアプリ本体とロゴだけを Pages に配置し、設計資料や JSON バックアップは配置しません。Production Pages は `main` への push でのみ更新します。
 
 ## 確認状況
 

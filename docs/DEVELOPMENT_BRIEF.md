@@ -51,25 +51,25 @@
 ## Step 3: UI 実装
 
 【UIデザイン標準】
-- prototype-design-bundle/DESIGN.md のデザイントークンを適用すること
-- prototype-design-bundle/VISUAL_GROUNDING_HARNESS.md の手順に従って設計判断を行うこと
-- NTT DATAロゴを prototype-design-bundle/assets/brand/ から配置すること（VVS準拠）
+- Product app として hero を置かず、ホールとプレーヤー入力を先に見せること
+- アプリ専用のオリジナル SVG ロゴを作成し、五輪リングや第三者ブランド表現を使わないこと
 - フッターに「Powered by Genesis」を表示すること
-- アクセントカラーは顧客ブランド明示時のみ上書き（未明示時は Future Blue #0072BC）
+- アクセントカラーはアプリ独自の Golf Green `#236246` を基本にすること
 
-適用内容：Product app として Hero を置かず、ホールとプレーヤー入力を先に出す。メダル選択・ホール移動・主要ボタンは44px以上、色以外に文言や点数で意味を伝え、Focus と Contrast を見える状態にする。メダル色は意味の補助に限る。公式ロゴの透明 Isolation を切り取らず、app title と別の領域に置く。Footer credit は補助表示とする。
+適用内容：メダル選択・ホール移動・主要ボタンは44px以上、色以外に文言や点数で意味を伝え、Focus と Contrast を見える状態にする。メダル色は意味の補助に限る。オリジナル SVG は app title と別の領域に置き、Footer credit は補助表示とする。
 
 GolfCounter の1ホール入力 / 検算表示、Golf Info Central のルール / 計算説明を参考に、操作の短さと点数の明瞭さのみ反映する。既存サービスの画面構成・コピー・視覚表現は再現しない。
 
 ## Step 4: GitHub Pages
 
-- `.github/workflows/pages.yml` は静的アプリ資材のみを artifact にし、main と実装 topic branch の push を公開する。
+- `.github/workflows/pages.yml` は静的アプリ資材のみを artifact にし、`main` への push だけを Production 公開 trigger にする。feature branch の push では公開しない。
 - Workflow source は GitHub Actions。必要な Pages 権限を job に限定し、URL を環境出力に設定する。
-- Pages の公開設定が未作成の場合は `git_ops` が GitHub 権限で Actions source を設定し、workflow の成功と URL を確認する。権限不足なら POA に blocker として報告する。
+- `github-pages` deployment environment の branch policy も `main` だけを許可する。
+- Pages の公開設定が未作成の場合は `git_ops` が GitHub 権限で Actions source を設定する。権限不足なら POA に blocker として報告する。
 
 ## Step 5: 確認・納品
 
 - Task Brief に従い test files は作らず、test / build command は実行しない。
 - 差引計算、人数別メダル、ダイヤ判定、localStorage、JSON 検証と置換順をソースから読み直し、重大な計算・データ処理ミスを自己点検する。
-- `TEST_PLAN.md` には手動・Pages確認を Not run と記録し、Actions 実行後に実際の状態と公開 URL を追記する。
+- `TEST_PLAN.md` には実施していない確認を Not run と記録し、test / build / browser verification は実行しない。
 - `git_ops` は `feat/olympic-score-app` の日本語 Draft PR URL / 状態 / blocker、push 経路と SHA、Pages workflow / URL を POA に報告する。
