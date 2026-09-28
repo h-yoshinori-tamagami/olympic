@@ -43,6 +43,7 @@ function validateRound(candidate) {
   if (!isDate(candidate.date)) throw new Error("ラウンドの日付が正しくありません。");
   if (![9, 18].includes(candidate.holeCount)) throw new Error("ホール数は9または18にしてください。");
   if (!Array.isArray(candidate.players) || candidate.players.length < 2 || candidate.players.length > 4) throw new Error("プレーヤーは2〜4人にしてください。");
+  if (!Number.isInteger(candidate.currentHole) || candidate.currentHole < 1 || candidate.currentHole > candidate.holeCount) throw new Error("ラウンドの再開ホールが正しくありません。");
   const players = candidate.players.map((name) => typeof name === "string" ? name.trim() : "");
   if (players.some((name) => name.length < 1 || name.length > 40)) throw new Error("各プレーヤー名は1〜40文字にしてください。");
   if (typeof candidate.diamondEnabled !== "boolean") throw new Error("ダイヤ設定が正しくありません。");
@@ -61,6 +62,7 @@ function validateRound(candidate) {
     id: candidate.id,
     date: candidate.date,
     holeCount: candidate.holeCount,
+    currentHole: candidate.currentHole,
     players,
     diamondEnabled: candidate.diamondEnabled,
     createdAt: candidate.createdAt,
@@ -86,6 +88,7 @@ function validateSnapshot(candidate, isBackup = false) {
   const activeHole = candidate.activeHole;
   if (!Number.isInteger(activeHole) || activeHole < 1 || activeHole > 18) throw new Error("再開ホールの指定が正しくありません。");
   if (activeRound && activeHole > activeRound.holeCount) throw new Error("再開ホールがラウンドのホール数を超えています。");
+  if (activeRound && activeHole !== activeRound.currentHole) throw new Error("ラウンドと再開ホールの指定が一致しません。");
   if (!activeRound && activeHole !== 1) throw new Error("再開中ラウンドがない場合、再開ホールは1にしてください。");
   return { schemaVersion: 1, activeRoundId, activeHole, rounds };
 }
@@ -326,7 +329,7 @@ function handleCreateRound(event) {
   const holeCount = Number($("#hole-count").value);
   const now = new Date().toISOString();
   const round = {
-    id: newId(), date: $("#round-date").value, holeCount, players,
+    id: newId(), date: $("#round-date").value, holeCount, currentHole: 1, players,
     diamondEnabled: $("#diamond-enabled").checked,
     createdAt: now, updatedAt: now,
     holeResults: Array.from({ length: holeCount }, () => Array(playerCount).fill(null))
@@ -349,7 +352,10 @@ function updateHole(mutate, focusSelector = null) {
   const next = cloneState();
   mutate(next);
   const round = next.rounds.find((item) => item.id === next.activeRoundId);
-  if (round) round.updatedAt = new Date().toISOString();
+  if (round) {
+    round.currentHole = next.activeHole;
+    round.updatedAt = new Date().toISOString();
+  }
   commit(next, undefined, focusSelector);
 }
 
@@ -386,7 +392,7 @@ function exportAll() {
 function exportOne(roundId) {
   const round = appState.rounds.find((item) => item.id === roundId);
   if (!round) return;
-  const oneRoundState = { activeRoundId: roundId, activeHole: appState.activeRoundId === roundId ? appState.activeHole : 1 };
+  const oneRoundState = { activeRoundId: roundId, activeHole: round.currentHole };
   const original = appState;
   appState = { ...appState, ...oneRoundState };
   downloadBackup([round], `olympic-backup-${round.date}.json`);
@@ -418,7 +424,7 @@ function handleRoundAction(button) {
   if (action === "resume") {
     const next = cloneState();
     next.activeRoundId = round.id;
-    next.activeHole = 1;
+    next.activeHole = round.currentHole;
     commit(next, `${displayDate(round.date)}のラウンドを開きました。`, "#round-title");
     window.scrollTo({ top: 0, behavior: "smooth" });
   } else if (action === "delete") {

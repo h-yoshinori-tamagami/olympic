@@ -29,7 +29,7 @@ d_i = g_i × (n − 1) − Σ(g_j), j ≠ i
 
 ## 4. 保存形式とプライバシー
 
-ブラウザーの localStorage key は `olympic-score-app.v1`。保存するトップレベル形式は `{ schemaVersion, activeRoundId, activeHole, rounds }`。各ラウンドは識別子、日付、ホール数、プレーヤー名、ダイヤ設定、作成・更新日時、ホールごと・プレーヤーごとのメダル ID 配列を持つ。点数は保存せず、表示時に計算する。
+ブラウザーの localStorage key は `olympic-score-app.v1`。保存するトップレベル形式は `{ schemaVersion, activeRoundId, activeHole, rounds }`。各ラウンドは識別子、日付、ホール数、再開用の現在ホール、プレーヤー名、ダイヤ設定、作成・更新日時、ホールごと・プレーヤーごとのメダル ID 配列を持つ。トップレベルの `activeHole` は選択中ラウンドの現在ホールと一致させる。点数は保存せず、表示時に計算する。
 
 JSON バックアップは `{ format: "golf-olympic-backup", version: 1, exportedAt, activeRoundId, activeHole, rounds }`。復元時はルート、バージョン、ラウンド ID の重複、日付、2〜4人、9 / 18 ホール、ホール配列長、設定に適合するメダル ID を検証する。検証が完了し、利用者が置換確認に同意した後にのみ localStorage を置換する。
 
