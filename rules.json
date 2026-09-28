@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "title": "標準ルール",
+  "diamondEnabledByDefault": true,
+  "medals": [
+    { "id": "none", "label": "なし", "points": 0, "description": "獲得なし" },
+    { "id": "gold", "label": "金", "points": 4, "description": "金メダルを1パットで獲得" },
+    { "id": "silver", "label": "銀", "points": 3, "description": "銀メダルを1パットで獲得" },
+    { "id": "bronze", "label": "銅", "points": 2, "description": "銅メダルを1パットで獲得" },
+    { "id": "iron", "label": "鉄", "points": 1, "description": "鉄メダルを1パットで獲得" },
+    { "id": "diamond", "label": "ダイヤ", "points": 5, "description": "グリーン外から直接カップイン" }
+  ],
+  "playerMedals": {
+    "2": ["gold", "silver"],
+    "3": ["gold", "silver", "bronze"],
+    "4": ["gold", "silver", "bronze", "iron"]
+  },
+  "explanation": [
+    "グリーン上でカップから遠い順に、4人は金・銀・銅・鉄、3人は金・銀・銅、2人は金・銀を割り当てます。",
+    "割り当てられた位置から1パットでカップインした場合だけ、そのメダルの点を獲得します。獲得しなければ0点です。",
+    "ダイヤはグリーン外から直接カップインした場合の5点です。ラウンド作成時に有効・無効を選べます。",
+    "同じメダルを複数人が獲得した記録もできます。同距離などの扱いは組で合意してください。"
+  ],
+  "calculation": "プレーヤーの差引点 = 自分の獲得点 × (人数 − 1) − 他のプレーヤーの獲得点合計。1ホールとラウンドの差引合計は0になります。",
+  "excludedRules": ["3パット減点", "砂イチ・竿イチ等の派生ルール", "金額換算"]
+}

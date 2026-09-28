@@ -1,0 +1,6 @@
+# Local user data and exported backups must stay out of the public repository.
+input/settings.txt
+**/input/settings.txt
+olympic-backup-*.json
+*.local.json
+.DS_Store

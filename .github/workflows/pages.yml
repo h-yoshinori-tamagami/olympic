@@ -1,0 +1,41 @@
+name: Publish GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Prepare static app files
+        run: |
+          mkdir -p "$RUNNER_TEMP/olympic-pages/assets"
+          cp index.html styles.css app.js rules.json "$RUNNER_TEMP/olympic-pages/"
+          cp -R assets/brand "$RUNNER_TEMP/olympic-pages/assets/"
+      - name: Upload static app artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/olympic-pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
